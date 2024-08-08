@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Your existing head content -->
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+</head>
+<body>
+   
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Tabs Titles -->
+          <h2 class="active"> Sign In </h2>
+          <h2 class="inactive underlineHover" ><a href="second.html">Sign Up</a></h2>
+      
+          <!-- Icon -->
+          <div class="fadeIn first">
+            <img src="logo1.jpg" id="icon" alt="User Icon" />
+          </div>
+      
+          <!-- Login Form -->
+          
+                       
+                            <h1>Login</h1>
+                            <div class="form-group">
+                                <input type="text" class="fadeIn second" id="rollno" placeholder="Roll Number" required>
+                               
+                                <input type="text" class="fadeIn second" id="inputPassword3" placeholder="Password" required><br>
+                                <input type="submit" class="fadeIn fourth" value="Log In" id="loginBtn">
+                               
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+                
+                
+            </div>
+        </form>
+      
+          <!-- Remind Password -->
+          
+      
+        </div>
+    </div>
+    <script>
+        // Function to handle login button click
+        function handleLogin() {
+            var rollno = document.getElementById("rollno").value;
+            var password = document.getElementById("inputPassword3").value;
+            
+            // Validate password
+            if (password === "srec@123") {
+                sessionStorage.setItem("rollno", rollno); // Store the rollno in sessionStorage
+                window.location.href = "dashboard.html"; // Redirect to another page after login
+            } else {
+                alert("Invalid credentials. Please try again.");
+            }
+        }
+
+        // Add event listener to the login button
+        document.getElementById("loginBtn").addEventListener("click", handleLogin);
+
+        // Function to handle find button click
+        function handleFindData() {
+            // Your FindData function code here
+            // This is where you would put the functionality for the Find button
+            console.log("Find button clicked");
+        }
+
+        // Add event listener to the find button
+       
+    </script>
+</body>
+</html>

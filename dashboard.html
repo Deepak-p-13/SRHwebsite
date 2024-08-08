@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Donor Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    
+    <div class="row justify-content-center align-items-center gy-2">
+        <div class="col-12 col-md-6 mt-0 d-flex justify-content-center">
+            <a href="https://srec.ac.in/"><img src="logo.png" alt="srec" class="img-fluid"></a>
+        </div>
+    </div>
+    
+    
+    <ul class="nav">
+        <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" id="updateProfileLink">Update Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="#donate">Donate</a></li>
+        <li class="nav-item" style="float:right"><a class="nav-link" href="index.html">Logout</a></li>
+    </ul>
+    
+    <div id="home">
+        <section class="vh-100 bg-image" style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+            <div class="mask d-flex align-items-center h-100 gradient-custom-2">
+                <div class="container h-100">
+                    <div class="row justify-content-center align-items-center h-100">
+                        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                            <div class="card" style="border-radius: 15px;">
+                                <div class="card-body p-5">
+                                    <h2 class="text-uppercase text-center mb-5">YOUR PROFILE</h2>
+                                    <form>
+                                        <div id="findDetails">
+                                            <h3 id="name"></h3>
+                                            <h3 id="rollno1"></h3>
+                                            <h3 id="department"></h3>
+                                            <h3 id="bloodgroup"></h3>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+     
+    <div id="donate">
+        <section class="vh-100 bg-image" style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+            <div class="mask d-flex align-items-center h-90 gradient-custom-3">
+                <div class="container h-100">
+                    <div class="row justify-content-center align-items-center h-100">
+                        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                            <div class="card" style="border-radius: 15px;">
+                                <div class="card-body p-5">
+                                    <h2 class="text-uppercase text-center mb-5"></h2>
+                                    <h1 class="highlight"><ani>Fill the details below before donating</ani></h1>
+                                    <br>
+                                    <form>
+                                        
+                                        <div class="form-outline mb-4">
+                                            <input type="text" id="hospitalname" class="form-control form-control-lg" placeholder="Hospital Name" required>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <input type="email" id="email" class="form-control form-control-lg" placeholder="Email" required>
+                                        </div>
+                                        <br>
+                                        <div class="form-outline mb-4">
+                                            <label>How many times have you donated blood?</label>
+                                            <input type="text" id="maxcount" class="form-control form-control-lg" required>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <input type="date" id="dob" class="form-control form-control-lg" />
+                                            <label class="form-label" for="dob"></label>
+                                        </div>
+                                        <div class="d-grid gap-2">
+                                            <button type="button" class="btn btn-success btn-lg gradient-custom-4" id="Rbtn">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script type="module">
+        // Import Firebase SDKs and initialize Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
+        import { getDatabase, ref, get, set, child, update, remove } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBwqW46MOCcVysieJ7LEkWD6yyjfjeE5xo",
+            authDomain: "blood-donation-71eb2.firebaseapp.com",
+            databaseURL: "https://blood-donation-71eb2-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "blood-donation-71eb2",
+            storageBucket: "blood-donation-71eb2.appspot.com",
+            messagingSenderId: "647622457107",
+            appId: "1:647622457107:web:d4444c1f9bc90a236b4ce6",
+            measurementId: "G-DJ51674Q13"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase();
+
+        // Define variables
+        const name = document.querySelector("#name");
+        const department = document.querySelector("#department");
+        const bloodgroup = document.querySelector("#bloodgroup");
+        const rollno = sessionStorage.getItem("rollno");
+        const requestupdate = document.querySelector("#Rbtn");
+        const namehospital = document.querySelector("#hospitalname");
+        const facultyname = document.querySelector("#facultyname");
+        const email = document.querySelector("#email");
+        const maxcount = document.querySelector("#maxcount");
+        const dob = document.querySelector("#dob");
+        const updateProfileLink = document.querySelector("#updateProfileLink");
+
+        let foundBloodGroup = null; 
+        let tempname = null;
+        let rollnofind = null;
+        let dataFound = "0";
+
+        function FindData() {
+            const dbref = ref(db);
+            const bloodGroups = ["A+", "A-", "A1+", "A1-", "A1B+", "A1B-", "AB+", "AB-", "B+", "B-", "O+", "O-"];
+           
+            bloodGroups.forEach(bloodGroup => {
+                const path = "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU/" + bloodGroup + "/" + rollno;
+                const childRef = child(dbref, path);
+
+                get(childRef)
+                .then((snapshot)=>{
+                    if(snapshot.exists()){
+                        name.innerHTML = "Name: " + snapshot.val().NAME;
+                        document.getElementById("rollno1").innerHTML = "ID No: " + snapshot.val().ROLL_NO;
+                        department.innerHTML = "Department: " + snapshot.val().DEPARTMENT;
+                        bloodgroup.innerHTML = "Bloodgroup: " + bloodGroup;
+                        foundBloodGroup = bloodGroup;
+                        tempname = snapshot.val().NAME;
+                        dataFound = 1; // Set flag to true if data is found
+                        rollnofind = rollno;
+
+                        // Update the Update Profile link to include the roll number
+                        updateProfileLink.href = `update.html?rollno=${rollno}`;
+                    }
+                })
+                .catch((error)=>{
+                    alert(error);
+                });
+            });
+        }
+       
+        FindData();
+
+        if (dataFound === 0) {
+            window.location.href = "second.html"; // Redirect if roll number is not found
+        }
+
+        function EditProfile() {
+            const updatedData = {
+                ROLL_NO: rollnofind,
+                NAME_OF_HOSPITAL: namehospital.value,
+               
+                EMAIL: email.value,
+                Trigger: "1",
+                DONATION_DATE: dob.value,
+                
+                BLOODGROUP: foundBloodGroup,
+                NAME:tempname,
+                MAXCOUNT:maxcount.value
+            };
+
+            
+      update(ref(db, "RequestedPeopleSRH/"+rollnofind), updatedData)
+        .then(() => {
+          alert("updated successfully");
+        })
+        .catch((error) => {
+          
+        });
+        }
+
+        requestupdate.addEventListener('click', EditProfile);
+    </script>
+</body>
+</html>

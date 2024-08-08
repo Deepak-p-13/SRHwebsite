@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <title>Registration</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+  <section class="vh-100 bg-image"
+    style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-121 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="border-radius: 15px;">
+              <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+
+                <form id="registrationForm">
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="enterID" class="form-control form-control-lg" required />
+                    <label class="form-label" for="enterID">Id No</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="enterName" class="form-control form-control-lg" required />
+                    <label class="form-label" for="enterName">Your Name</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input type="text" id="department" class="form-control form-control-lg" required />
+                    <label class="form-label" for="enterName">Department</label>
+                  </div>
+
+                
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="address" class="form-control form-control-lg" required />
+                    <label class="form-label" for="address">Your Address</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="phoneno" class="form-control form-control-lg" required />
+                    <label class="form-label" for="phoneno">Phone No</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="email" id="email" class="form-control form-control-lg" required />
+                    <label class="form-label" for="email">Your Email</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="date" id="dob" class="form-control form-control-lg" required>
+                    <label class="form-label" for="dob"> Date of Birth</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="fathername" class="form-control form-control-lg" required />
+                    <label class="form-label" for="fathername">Father Name</label>
+                  </div>
+
+                 
+                  
+
+                  <div class="form-outline mb-4">
+                    <select class="form-select" id="bloodgroup" name="sellist1" required>
+                      <option value="">Select Blood Group</option>
+                      <option>A+</option>
+                      <option>A-</option>
+                      <option>A1+</option>
+                      <option>A1-</option>
+                      <option>A1B+</option>
+                      <option>A1B-</option>
+                      <option>AB+</option>
+                      <option>AB-</option>
+                      <option>B+</option>
+                      <option>B-</option>
+                      <option>O+</option>
+                      <option>O-</option>
+                    </select>
+                    <label class="form-label" for="bloodgroup">Blood Group</label>
+                  </div>
+
+                  <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                      id="insert">INSERT</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBwqW46MOCcVysieJ7LEkWD6yyjfjeE5xo",
+      authDomain: "blood-donation-71eb2.firebaseapp.com",
+      databaseURL: "https://blood-donation-71eb2-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "blood-donation-71eb2",
+      storageBucket: "blood-donation-71eb2.appspot.com",
+      messagingSenderId: "647622457107",
+      appId: "1:647622457107:web:d4444c1f9bc90a236b4ce6",
+      measurementId: "G-DJ51674Q13"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+
+    const db = getDatabase();
+
+    const enterID = document.querySelector("#enterID");
+    const bloodgroup = document.querySelector("#bloodgroup");
+    const entername = document.querySelector("#enterName");
+    const email = document.querySelector("#email");
+    const dob = document.querySelector("#dob");
+    const address = document.querySelector("#address");
+    const batch = document.querySelector("#batch");
+    const department = document.querySelector("#department");
+    const phoneno = document.querySelector("#phoneno");
+   
+    const fathername = document.querySelector("#fathername");
+    const insertBtn = document.querySelector("#insert");
+
+    function validateForm() {
+      if (enterID.value.length !== 5 ) {
+        alert("Roll No must be exactly 5 characters long and start with '7181'");
+        return false;
+      }
+      const fields = [enterID, entername, email, dob, address, batch, department, phoneno,  bloodgroup, fathername];
+      for (const field of fields) {
+        if (field.value.trim() === "") {
+          alert("Please fill all the fields");
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function InsertData() {
+      if (!validateForm()) return;
+
+      set(ref(db, "1q0JBlAZa9bvIxEWdSIVRF6-LE3VnZQX9VVWixiTebrU/" + bloodgroup.value + "/" + enterID.value), {
+        ROLL_NO: enterID.value,
+        NAME: entername.value,
+        DOB: dob.value,
+        DEPARTMENT: department.value,
+        CONTACT_NO: phoneno.value,
+       
+        "BLOOD GROUP": bloodgroup.value,
+        BATCH: batch.value,
+        DONATED: "Not Donated",
+        DONATION_COUNT: 0,
+        FATHERS_NAME: fathername.value,
+        NAME_OF_HOSPITAL: 'NIL',
+        FacultyName: 'NIL',
+        ADDRESS1: address.value,
+        ADDRESS2: 'NIL',
+        ADDRESS3: 'NIL',
+        ADDRESS4: 'NIL',
+        EMAIL: email.value
+      })
+        .then(() => {
+          alert("Data added successfully");
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+
+    insertBtn.addEventListener('click', InsertData);
+  </script>
+</body>
+
+</html>

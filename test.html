@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Registration</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <section class="vh-100 bg-image"
+  style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-121 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+
+              <form>
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="enterID" class="form-control form-control-lg" />
+                  <label class="form-label" for="form3Example1cg">Roll No</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="text" id="enterName" class="form-control form-control-lg" />
+                    <label class="form-label" for="form3Example1cg">Your Name</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <select class="form-select" id="department" name="sellist1">
+                      <option>CSE</option>
+                      <option>ECE</option>
+                      <option>EEE</option>
+                      <option>MTECH</option>
+                      </select>
+                      <label class="form-label" for="form3Example3cg">Department</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="address" class="form-control form-control-lg" />
+                    <label class="form-label" for="form3Example1cg">Your Address</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="phoneno" class="form-control form-control-lg" />
+                    <label class="form-label" for="form3Example1cg">Phone No</label>
+                  </div>
+
+                <div class="form-outline mb-4">
+                  <input type="email" id="email" class="form-control form-control-lg" />
+                  <label class="form-label" for="form3Example3cg">Your Email</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="date" id="dob" class="form-control form-control-lg" />
+                    <label class="form-label" for="form3Example3cg"> Date of Birth</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="batch" class="form-control form-control-lg" />
+                    <label class="form-label" for="form3Example3cg"> Batch</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="fathername" class="form-control form-control-lg" />
+                    <label class="form-label" for="form3Example3cg">Father Name</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="batch" class="form-control form-control-lg" />
+                    <label class="form-label" for="form3Example3cg"> Day</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <select class="form-select" id="daycholarhosteller" name="sellist1">
+                      <option>Daycholar</option>
+                      <option>Hosteller</option>
+                      </select>
+                      <label class="form-label" for="form3Example3cg">Blood Group</label>
+                  </div>
+         
+                <div class="form-outline mb-4">
+                  <select class="form-select" id="bloodgroup" name="sellist1">
+                    <option>A+</option>
+                    <option>B+</option>
+                    <option>A-</option>
+                    <option>A1+</option>
+                    </select>
+                    <label class="form-label" for="form3Example3cg">Blood Group</label>
+                </div>
+
+           
+                <div class="d-flex justify-content-center">
+            
+                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="insert">INSERT</button>
+                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="update">UPDATE</button>
+
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    
+
+    <script type="module">
+
+         // Import the functions you need from the SDKs you need
+         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+    apiKey: "AIzaSyBwqW46MOCcVysieJ7LEkWD6yyjfjeE5xo",
+    authDomain: "blood-donation-71eb2.firebaseapp.com",
+    databaseURL: "https://blood-donation-71eb2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "blood-donation-71eb2",
+    storageBucket: "blood-donation-71eb2.appspot.com",
+    messagingSenderId: "647622457107",
+    appId: "1:647622457107:web:d4444c1f9bc90a236b4ce6",
+    measurementId: "G-DJ51674Q13"
+  };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        //THIS IS WHERE YOU PASTE THE CODE TO CONNECT TO YOUR OWN DATABASE
+        //Copy and paste the CDN bit of code from your app that you created on Firebase.
+        //The script tag above is already there, so careful not to have duplicate script tags.
+        //After you've copied and pasted, just delete the unnecessary script tags. 
+   
+
+        import {getDatabase, ref, get, set, child, update, remove}
+        from    "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js";
+        //Copy and Paste the URL from near the top of the CDN you pasted in from firebase
+        // (the one where you imported "initializeApp" from),
+        //but change "firebase-app" to "firebase-database"
+        
+
+        const db = getDatabase();
+         
+        var enterID = document.querySelector("#enterID");
+        var bloodgroup = document.querySelector("#bloodgroup");
+        var entername = document.querySelector("#enterName");
+        var email = document.querySelector("#email");
+        var dob = document.querySelector("#dob");
+        var address = document.querySelector("#address");
+        var batch = document.querySelector("#batch");
+        var department = document.querySelector("#department");
+        var phoneno = document.querySelector("#phoneno");
+        var daycholarhosteller=document.querySelector("#daycholarhosteller");
+        var donated="NOt_Donated";
+        var donationcount="NIL";
+        var nameofhospital='NIL';
+        var facultyname='NIL';
+        var fathername=document.querySelector("#fathername");
+        //var nameofhospital=document.querySelector("#nameofhospital");;
+         //var facultyname=document.querySelector("#facultyname");;
+       var insertBtn = document.querySelector("#insert");
+        var updateBtn = document.querySelector("#update");
+        var removeBtn = document.querySelector("#remove");
+        console.log(donated);
+
+        function InsertData() {
+            set(ref(db, "People/"+ enterID.value),{
+                ROLL_NO: enterID.value,
+                NAME: entername.value,
+                DOB: dob.value,
+                DEPARTMENT:department.value,
+                CONATACT_NO:phoneno.value,
+                DAYSCHOLAR_HOSTELLER:daycholarhosteller.value,
+                BLOODGROUP:bloodgroup.value,
+                BATCH:batch.value,
+                 DONATED:donated,
+                DONATION_COUNT:donationcount,
+                FATHERS_NAME:fathername.value,
+                NAME_OF_HOSPITAL:nameofhospital,
+                FacultyName:facultyname
+
+
+
+
+
+            })
+            .then(()=>{
+                alert("Data added successfully");
+            })
+            .catch((error)=>{
+                alert(error);
+            });
+        }
+
+      insertBtn.addEventListener('click', InsertData);
+       
+       
+       
+
+      </script>
+</body>
+</html>
